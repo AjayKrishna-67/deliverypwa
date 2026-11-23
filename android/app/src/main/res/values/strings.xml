@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kaaikani Delivery</string>
+    <string name="title_activity_main">Kaaikani Delivery</string>
+    <string name="package_name">in.co.kaaikani.deliverypartner.twa</string>
+    <string name="custom_url_scheme">in.co.kaaikani.deliverypartner.twa</string>
+</resources>

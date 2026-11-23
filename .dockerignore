@@ -1,0 +1,52 @@
+# Build context for the dockerfile. Smaller context = faster builds; none of
+# this affects what ends up in the image (that is controlled by the runner
+# stage in the dockerfile), except that .env* is excluded on purpose:
+# NEXT_PUBLIC_* values are passed as --build-arg, secrets as runtime env.
+
+# dependencies / build output (rebuilt inside the image)
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+
+# git / CI / editor
+.git
+.github
+.vscode
+.idea
+.activity-logs
+*.log
+nano.*.save
+.DS_Store
+
+# env files — injected explicitly, never baked from the repo
+.env*
+!.env.example
+
+# native app shell + docs + spreadsheets — not part of the web build
+android
+capacitor-shell
+capacitor.config.ts
+docs
+excel
+scripts
+*.md
+*.xlsx
+*.pem
+certificates
+
+# graphql codegen inputs (graphql/ and gql/ are imported by the app and stay)
+schema.graphql
+codegen.ts
+
+# tests
+**/*.test.ts
+**/*.test.tsx
+
+# docker
+dockerfile
+Dockerfile
+.dockerignore
+startup.sh

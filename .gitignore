@@ -1,0 +1,60 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# local env overrides — never committed
+# (.env.development is tracked on purpose; .env and .env.production hold
+#  secrets and are NOT committed - copy .env.example and fill in real values;
+#  .env.local is the per-developer override Next.js reads last)
+.env.local
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+certificates
+
+MEMORY.md
+# Capacitor (machine-specific)
+android/local.properties
+android/app/build/
+android/.gradle/
+
+# Play upload key — never commit (see docs/CAPACITOR-APP.md)
+android/keystore.properties
+android/app/upload.keystore
+.env
+.env.production

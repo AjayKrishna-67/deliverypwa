@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/* ─── Theme tokens ─────────────────────────────────────────────────
+   Dark is the default (`:root`); light overrides it under `html.light`.
+   next-themes (providers/ThemeProvider) puts `light` or `dark` on <html>
+   before first paint, resolving "system" from prefers-color-scheme.
+
+   Components never hard-code a colour that has to flip between themes:
+     --overlay-rgb  ink layered over the page — hovers, inputs, dividers.
+                    Use as rgb(var(--overlay-rgb)/0.06), or the Tailwind
+                    `overlay` colour: bg-overlay/[0.06], border-overlay/10.
+     --surface      opaque raised panels — dropdowns, popovers, modals.
+     --tone-*       status text/icons. Dark uses the pale 400 shades, light
+                    the deep 700-800 shades — each light tone clears WCAG AA
+                    (4.5:1) even on its own 14% badge tint. */
+
+:root {
+    color-scheme: dark;
+    --background: #0a0a0f;
+    --bg-rgb: 10 10 15;
+    --foreground: #f0f0f5;
+    --overlay-rgb: 255 255 255;
+    --surface: #1a1a2e;
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --accent: #6366f1;
+    --accent-hover: #818cf8;
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --input-focus: rgba(99, 102, 241, 0.4);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --sidebar-width: 240px;
+    --sidebar-bg: rgba(10, 10, 20, 0.8);
+    --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.5);
+    --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.6);
+    --shadow-sheet: 0 -20px 60px rgba(0, 0, 0, 0.7);
+    /* Modal / bottom-sheet body (FulfillModal, PaymentCollectionModal) */
+    --surface-sheet: linear-gradient(170deg, #0e1120 0%, #131426 100%);
+
+    --tone-red: #f87171;
+    --tone-orange: #fb923c;
+    --tone-amber: #fbbf24;
+    --tone-amber-deep: #f59e0b;
+    --tone-green: #4ade80;
+    --tone-green-deep: #22c55e;
+    --tone-teal: #2dd4bf;
+    --tone-teal-deep: #14b8a6;
+    --tone-cyan: #22d3ee;
+    --tone-sky: #38bdf8;
+    --tone-sky-soft: #63b3ed;
+    --tone-blue: #60a5fa;
+    --tone-indigo: #818cf8;
+    --tone-indigo-soft: #a5b4fc;
+    --tone-violet: #a78bfa;
+    --tone-violet-soft: #c4b5fd;
+    --tone-purple: #c084fc;
+    --tone-pink: #f472b6;
+    --tone-slate: #94a3b8;
+}
+
+:root.light {
+    color-scheme: light;
+    --background: #f4f5f9;
+    --bg-rgb: 244 245 249;
+    --foreground: #14151f;
+    --overlay-rgb: 20 22 40;
+    --surface: #ffffff;
+    --card-bg: #ffffff;
+    --card-border: rgba(20, 22, 40, 0.1);
+    /* One step deeper than the dark theme's #6366f1 — that shade is only
+       4.5:1 on white, below AA once it sits on its own tint. */
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --error: #b91c1c;
+    --error-bg: rgba(220, 38, 38, 0.08);
+    --input-bg: #ffffff;
+    --input-border: rgba(20, 22, 40, 0.15);
+    --input-focus: rgba(99, 102, 241, 0.35);
+    --text-muted: rgba(20, 22, 40, 0.64);
+    --sidebar-bg: rgba(255, 255, 255, 0.96);
+    --shadow-popover: 0 12px 32px rgba(20, 22, 40, 0.14);
+    --shadow-modal: 0 20px 50px rgba(20, 22, 40, 0.18);
+    --shadow-sheet: 0 -12px 40px rgba(20, 22, 40, 0.16);
+    --surface-sheet: #ffffff;
+
+    --tone-red: #b91c1c;
+    --tone-orange: #9a3412;
+    --tone-amber: #92400e;
+    --tone-amber-deep: #854d0e;
+    --tone-green: #166534;
+    --tone-green-deep: #166534;
+    --tone-teal: #115e59;
+    --tone-teal-deep: #115e59;
+    --tone-cyan: #155e75;
+    --tone-sky: #075985;
+    --tone-sky-soft: #075985;
+    --tone-blue: #1d4ed8;
+    --tone-indigo: #4f46e5;
+    --tone-indigo-soft: #4338ca;
+    --tone-violet: #6d28d9;
+    --tone-violet-soft: #5b21b6;
+    --tone-purple: #7e22ce;
+    --tone-pink: #9d174d;
+    --tone-slate: #475569;
+
+    /* Tailwind palette remap. Screens written for the dark theme use pale
+       shades for text (text-red-400) and near-black shades for panels
+       (bg-zinc-900, bg-red-950/80). Light mode swaps those shades for their
+       mirror image so the same class names stay readable. Mid shades
+       (500/600 — buttons, dots) are left alone. Only shades the app uses
+       are listed; add a line here before using a new pale/dark shade. */
+    --color-zinc-950: var(--background);
+    --color-zinc-900: #ffffff;
+    --color-zinc-800: oklch(92% 0.004 286.32);
+    --color-zinc-700: oklch(87.1% 0.006 286.286);
+    --color-zinc-600: oklch(70.5% 0.015 286.067);
+    --color-zinc-400: oklch(44.2% 0.017 285.786);
+    --color-zinc-300: oklch(37% 0.013 285.805);
+    --color-zinc-200: oklch(27.4% 0.006 286.033);
+    --color-zinc-100: oklch(21% 0.006 285.885);
+    --color-neutral-400: oklch(43.9% 0 0);
+    --color-neutral-200: oklch(26.9% 0 0);
+
+    --color-red-200: oklch(44.4% 0.177 26.899);
+    --color-red-300: oklch(50.5% 0.213 27.518);
+    --color-red-400: var(--tone-red);
+    --color-red-800: oklch(88.5% 0.062 18.334);
+    --color-red-900: oklch(88.5% 0.062 18.334);
+    --color-red-950: oklch(97.1% 0.013 17.38);
+    --color-amber-200: oklch(47.3% 0.137 46.201);
+    --color-amber-300: oklch(47.3% 0.137 46.201);
+    --color-amber-400: var(--tone-amber);
+    --color-amber-900: oklch(92.4% 0.12 95.746);
+    --color-amber-950: oklch(98.7% 0.022 95.277);
+    --color-green-400: var(--tone-green);
+    --color-emerald-300: oklch(50.8% 0.118 165.612);
+    --color-emerald-400: oklch(50.8% 0.118 165.612);
+    --color-indigo-300: var(--tone-indigo-soft);
+    --color-indigo-400: var(--tone-indigo);
+    --color-sky-400: var(--tone-sky);
+    --color-violet-400: var(--tone-violet);
+}
+
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-overlay: rgb(var(--overlay-rgb));
+    --color-surface: var(--surface);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Native app feel ──────────────────────────────────────────── */
+
+/* Remove tap highlight on links/buttons — native apps don't have it */
+html {
+    -webkit-tap-highlight-color: transparent;
+    /* Paints the overscroll / safe-area strip in the theme colour too */
+    background-color: var(--background);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent overscroll bounce */
+    overscroll-behavior: none;
+    /* NOTE: overflow:hidden is NOT set here — it clips fixed-position elements
+       like the install banner. It is only applied in standalone mode below. */
+}
+
+/* Disable text selection on interactive elements — feels more native */
+button,
+a,
+select {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ─── Standalone mode (installed PWA) ─────────────────────────── */
+/* These styles only apply when the app is opened from the home screen */
+
+@media (display-mode: standalone) {
+    body {
+        /* Side/bottom safe areas for notched devices */
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        /* Prevent pull-to-refresh — only in installed mode where banner never shows */
+        overflow: hidden;
+        /* NOTE: padding-top is handled per-component (DashboardHeader, LoginForm)
+           using env(safe-area-inset-top) so each page controls its own safe area. */
+    }
+}
+
+/* Custom keyframes for login page animations */
+@keyframes orb-float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -20px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+}
+
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-6px);
+    }
+
+    75% {
+        transform: translateX(6px);
+    }
+}

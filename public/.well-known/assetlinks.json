@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "in.co.kaaikani.deliverypartner.twa",
+      "sha256_cert_fingerprints": [
+        "42:31:AE:5B:6B:F6:44:73:6A:27:B1:15:91:8D:7B:C7:9E:80:DA:20:BD:CA:96:16:84:CD:90:94:24:24:18:1F",
+        "FC:D8:15:1E:E1:C6:50:9D:E5:6C:76:31:52:4C:9F:F5:99:82:B1:62:4E:17:16:4C:D7:ED:74:34:51:14:5B:23",
+        "FC:70:6B:CC:5A:E8:31:E7:17:37:2D:2C:C2:B6:DE:BE:D2:CD:94:57:9A:95:F8:AE:F0:6D:01:E1:1D:EB:92:48"
+      ]
+    }
+  }
+]
